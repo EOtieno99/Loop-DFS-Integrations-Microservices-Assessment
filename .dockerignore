@@ -1,0 +1,7 @@
+target
+.git
+.idea
+.agents
+.codex
+.env
+*.pdf
