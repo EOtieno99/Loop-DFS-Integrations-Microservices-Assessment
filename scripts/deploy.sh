@@ -34,7 +34,7 @@ else
 fi
 rendered_config=$(mktemp)
 trap 'rm -f "$rendered_config"' EXIT
-# kubectl generates YAML safely, including JDBC URLs with query parameters.
+
 kubectl -n loop-assessment create configmap country-config \
   --from-literal="DB_URL=${DB_URL:-jdbc:mysql://mysql:3306/loop_assessment}" \
   --from-literal="DB_USERNAME=${DB_USERNAME:-loop}" \
@@ -46,6 +46,7 @@ if [[ "${DEMO_MYSQL:-false}" == true ]]; then
   kubectl apply -f k8s/mysql-demo.yaml
   kubectl -n loop-assessment rollout status statefulset/mysql --timeout=300s
 fi
+
 # Render image before applying so the placeholder image never starts.
 sed "s|image: loop-assessment:local|image: ${IMAGE}|" k8s/app.yaml | kubectl apply -f -
 kubectl apply -f k8s/scaling.yaml
