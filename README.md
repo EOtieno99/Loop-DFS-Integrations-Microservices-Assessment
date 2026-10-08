@@ -1,6 +1,8 @@
 # Country information integration service
 
-Spring Boot 4.1.1 / Java 17 REST-to-SOAP service implementing the supplied assessment. It resolves a sentence-cased country name through `CountryISOCode`, calls `FullCountryInfo`, and atomically persists the complete country and its languages in MySQL. Flyway owns the schema; Hibernate validates it on startup.
+The resolves a sentence-cased country name through `CountryISOCode`, calls `FullCountryInfo`, and atomically persists the complete country and its languages in MySQL.
+
+Flyway owns the schema; Hibernate validates it on startup.
 
 ## Run locally
 
@@ -77,16 +79,3 @@ Errors are `application/problem+json` with `status`, `title`, `detail`, `code`, 
 The default suite includes normalization and service unit tests; secure namespace-aware SOAP codec tests; local HTTP provider tests for the two-call protocol, bounded retries, timeout and circuit opening; and MockMvc + H2 integration tests exercising real Flyway migrations, validation, persistence, language updates, optimistic conflicts, and HTTP errors. No test calls the public SOAP service.
 
 `MySqlCountryApiTest` reuses the API tests against a MySQL 8.4 Testcontainer when Docker is running. Without Docker it is explicitly skipped. Run `./mvnw -Dtest=MySqlCountryApiTest test` with Docker to verify MySQL-specific behavior. CI runs Java 17 tests and builds the container on Ubuntu. Reports are in `target/surefire-reports`; executable JAR is `target/Loop_Assessment-0.0.1-SNAPSHOT.jar`.
-
-## Implementation verification
-
-Verified on 2026-10-07 using Java 21 with Java 17 release compilation: `mvnw verify` built the executable JAR with 40 passing tests, zero failures/errors, and 13 MySQL tests explicitly skipped because Docker was unavailable. Both public SOAP operations were exercised read-only for Kenya (KE/Nairobi). All 10 Kubernetes resources passed strict kubeconform validation against Kubernetes 1.34; Compose/CI YAML parsed successfully and deployment/smoke scripts passed shell syntax checks. Docker images and an actual Kubernetes rollout were not executed in this environment.
-
-## Operations and assessment guides
-
-- [Architecture, integration and scaling decisions](docs/architecture.md)
-- [SoapUI setup and manual SOAP testing](docs/soapui.md)
-- [Container and Kubernetes deployment](docs/deployment.md)
-- [Kubernetes troubleshooting and monitoring](docs/troubleshooting.md)
-
-The original assessment PDF and retrieved WSDL are in `src/main/resources`. SoapUI is an operator tool; the application does not require it to run. This workspace initially has no Git repository or remote. GitHub publication requires an authorized repository URL/account; see deployment guide for commands.
