@@ -1,6 +1,6 @@
 # Country information integration service
 
-The resolves a sentence-cased country name through `CountryISOCode`, calls `FullCountryInfo`, and atomically persists the complete country and its languages in MySQL.
+The project resolves a sentence-cased country name through `CountryISOCode`, calls `FullCountryInfo`, and atomically persists the complete country and its languages in MySQL.
 
 Flyway owns the schema; Hibernate validates it on startup.
 
