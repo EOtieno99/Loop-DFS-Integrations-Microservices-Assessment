@@ -26,11 +26,11 @@ The connection acquisition timeout defaults to 3 seconds, validation timeout to 
 
 | Method | Path | Behavior |
 | --- | --- | --- |
-| POST | `/api/countries` | Import from SOAP; accepts `{"name":"Tanzania"}`; 201 with Location |
-| GET | `/api/countries?page=0&size=20` | All stored countries through bounded pages; maximum size 100 |
-| GET | `/api/countries/{id}` | Fetch one stored aggregate |
-| PUT | `/api/countries/{id}` | Replace editable data with the latest `version`; 200 |
-| DELETE | `/api/countries/{id}` | Delete country and dependent languages; 204 |
+| POST | `/api/v1/countries` | Import from SOAP; accepts `{"name":"Tanzania"}`; 201 with Location |
+| GET | `/api/v1/countries?page=0&size=20` | All stored countries through bounded pages; maximum size 100 |
+| GET | `/api/v1/countries/{id}` | Fetch one stored aggregate |
+| PUT | `/api/v1/countries/{id}` | Replace editable data with the latest `version`; 200 |
+| DELETE | `/api/v1/countries/{id}` | Delete country and dependent languages; 204 |
 
 Response shape:
 
